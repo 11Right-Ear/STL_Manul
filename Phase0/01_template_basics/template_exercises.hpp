@@ -134,10 +134,6 @@ void swap(T& a, T& b){
 // }
 
 
-
-#endif
-
-
 // ============================================================================
 // 第三部分: 类模板 (Class Template)
 // ============================================================================
@@ -153,11 +149,30 @@ void swap(T& a, T& b){
 //   - 实现 first 和 second 两个公有成员
 // 
 // 你的代码:
+template <typename T1, typename T2> 
+class Pair{
+    public:
+    Pair();
+    Pair(T1 x, T2 y) : first(x), second(y){};
+
+    ~Pair(){};
+
+    T1 getFist() const{
+        return first;
+    }
+    T2 getSecond() const{
+        return second;
+    }
+    T1 first;
+    T2 second;
+    private:
+
+};
 
 
 
 
-
+#endif
 
 // 练习 3.2: 实现一个模板类 Stack，支持 push 和 pop 操作
 // 
