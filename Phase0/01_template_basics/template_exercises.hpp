@@ -48,11 +48,16 @@
 // 你的代码:
 #ifndef TEMPLATE_EXERCISES_HPP
 #define TEMPLATE_EXERCISES_HPP
+
+#include <iostream>
+
 template<typename T>
 constexpr T pi = T{3.1415926535897932385};
 
+// template<typename T>
+// constexpr T a = T{0};
+// constexpr T b = T{0};
 
-#endif
 
 // ============================================================================
 // 第二部分: 函数模板 (Function Template)
@@ -69,8 +74,23 @@ constexpr T pi = T{3.1415926535897932385};
 //   - 确保支持任意可比较的类型
 // 
 // 你的代码:
+template <typename T>
+T Max(T a, T b){
+    T c;
+    return c = a >= b ? a : b;
+}
+
+template <typename T>
+void readtype(){
+    T a; T b;
+    std::cout << "please input same type numbers: " << std::endl;
+    std::cin >> a >> b;
+    std::cout << "max number is: " << std::max(a, b) << std::endl;
+}
 
 
+
+#endif
 
 
 
