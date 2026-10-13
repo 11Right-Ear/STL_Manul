@@ -90,7 +90,6 @@ void readtype(){
 
 
 
-#endif
 
 
 
@@ -102,10 +101,41 @@ void readtype(){
 //   - 可以使用 std::move (C++11) 优化移动语义
 // 
 // 你的代码:
+//prompt 指针实现
+// template <typename T>
+// void swap(T*& a, T*& b){
+//     // 这样是形参，会导致出了函数作用域即死
+//     // void swap(T* a, T* b)
+//     T* C = nullptr;
+//     C = a;
+//     std::cout << "C_add is: " << C << std::endl;
+//     std::cout << "C is: " << *C << std::endl;
+//     a = b;
+//     std::cout << "a_add is: " << a << std::endl;
+//     std::cout << "a is: " << *a << std::endl;
+//     b = C;
+//     std::cout << "b_add is: " << b << std::endl;
+//     std::cout << "b is: " << *b << std::endl;
+// }
+//& std::move实现
+template <typename T>
+void swap(T& a, T& b){
+    T c = std::move(a);
+    a = std::move(b);
+    b = std::move(c);
+}
+
+// template <typename T>
+// void swap(T& a, T& b){
+//     T c;
+//     c = a;
+//     a = b;
+//     b = c;
+// }
 
 
 
-
+#endif
 
 
 // ============================================================================
