@@ -51,6 +51,9 @@
 
 #include <iostream>
 
+#define SHOW(x) std::cout << x << std::endl
+#define PUTIN(x) std::cin >> x >> std::endl
+#define SPACE "    "
 template<typename T>
 constexpr T pi = T{3.1415926535897932385};
 
@@ -152,22 +155,85 @@ void swap(T& a, T& b){
 template <typename T1, typename T2> 
 class Pair{
     public:
-    Pair();
-    Pair(T1 x, T2 y) : first(x), second(y){};
+    //默认构造
+    Pair() = default;
+    //带参数构造
+    Pair(T1 x, T2 y) : first(x), second(y){}
+    //深拷贝构造
+    Pair(const Pair& x){
+        first = x.first;
+        second = x.second;
 
-    ~Pair(){};
+    }
+    //移动构造
+    Pair(Pair&& x){
+        first = std::move(x.first);
+        second = std::move(x.second);
+    }
 
+    ~Pair(){}
+
+    void setFirst(T1 x) {
+       first = x; 
+    }
+    void setSecond(T2 y) {
+       second = y; 
+    }
     T1 getFist() const{
         return first;
     }
     T2 getSecond() const{
         return second;
     }
+
+    // ==========重载============
+    //复制运算符 
+    Pair& operator=(const Pair& x){
+        first = x.first;
+        second = x.second;
+        return *this;
+    }
+
+    //比较运算符
+    bool operator==(const Pair& x){
+        return first == x.first && second == x.second;
+    }
+    bool operator<(const Pair& x){
+        return first == x.first && second < x.second;
+    }
+    bool operator>(const Pair& x){
+        return first == x.first && second > x.second;
+    }
+    friend std::ostream& operator<< (std::ostream& os, const Pair<T1, T2>& x){
+        os << "First is: " << x.first \
+        << SPACE << "Second is: " << x.second << std::endl;
+        return os;
+    };
+    //Q1:为什么这里不能使用流式输出？？？ 解决方法是加friend 
+    // std::ostream& operator<<(std::ostream& os, const Pair& x){
+    //     os << "First is: " << x.first << "Second is: " << x.second << std::endl;
+    //     return os;
+    // }
+
+    //工具函数
+    void swap(Pair& x, Pair& y){
+        Pair z;
+        z = x;
+        x = y;
+        y = z;
+    }
+    private:
     T1 first;
     T2 second;
-    private:
-
 };
+
+// 在类外如何声明一个模板函数？？？ 优点复杂
+
+// template <typename T1, typename T2>
+// std::ostream& operator<<(std::ostream& os, const Pair<T1,T2>& x){
+//     os << "Fist is: " << x.first << "Second is: " << x.second <<std::endl;
+//     return os;
+// }
 
 
 
