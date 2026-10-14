@@ -438,9 +438,24 @@ class Stack<char> {
 //   - 指针版本可能有不同的行为（如解引用）
 // 
 // 你的代码:
+// 在C++中， 偏特化（Partial specialization）必须要一个主模板
+template <typename T>
+class Myptr{
+    public:
+    Myptr(T* ptr) : ptr_(ptr){
 
-
-
+    }
+    ~Myptr(){
+        delete ptr_;
+    }
+    T& operator*(){return *ptr_;}
+    const char* GetType() const {
+        SHOW("the ptr type is: ");
+        return "Myptr";
+    }
+    // private:
+    T* ptr_;
+};
 
 
 
