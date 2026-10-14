@@ -51,6 +51,7 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 
 #define ENTER '\n'
 #define SHOW(x) std::cout << x << ENTER
@@ -172,6 +173,10 @@ class Pair{
         first = std::move(x.first);
         second = std::move(x.second);
     }
+    //拷贝构造函数 --》 对于第六部分
+    template<typename U>
+    Pair(const Pair<U, U>& x) : first(static_cast<U>(x.getFist())), second(static_cast<U> \
+        (x.getSecond())){};
 
     ~Pair(){}
 
@@ -494,7 +499,11 @@ void print(T x, Args ... args){
 //   - 返回 std::unique_ptr<T>
 // 
 // 你的代码:
-
+// void make_unique_ptr(){}
+template <typename T, typename... Args> 
+std::unique_ptr<T> make_unique_ptr(Args&& ... args){
+    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
 
 
 
@@ -513,7 +522,6 @@ void print(T x, Args ... args){
 //   - 从另一个不同但兼容的类型 U 构造 T
 // 
 // 你的代码:
-
 
 
 

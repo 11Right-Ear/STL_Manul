@@ -4,11 +4,15 @@
 
 
 int main(){
-    // Myptr<int> m1 = new int(42);
-    // SHOW(m1.GetType());
-    // SHOW(*m1);
-    print(1,2,3);
-    print("AX", 3.15);
-    print();
+    // auto p1 = make_unique_ptr<int>(32);
+    // SHOW(*p1) << ENTER;
+    // auto p2 = make_unique_ptr<std::string>("intellengence");
+    // SHOW(*p2);
+    Pair<double, double> p1(1.31, 3.13);
+    SHOW(p1);
+    Pair<int, int> p2(p1);
+    SHOW(p2);
+
+
     return 0;
 }
