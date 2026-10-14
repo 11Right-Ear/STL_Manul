@@ -4,26 +4,17 @@
 
 
 int main(){
-    
-    Pair P1{"vegetable", 19};
-    int i = 1;
-    SHOW(i);
-    // std::cout << "name is: "<< P1.getFist() << std::endl;
-    // std::cout << "value is: "<< P1.getSecond() << std::endl;
-    SHOW(P1);
-    // Pair P2 = P1;
-    // P2.setFirst("apple");
-    // P2.setSecond(100);
-    // std::cout << "P2name is: "<< P2.getFist() << std::endl;
-    // std::cout << "P2value is: "<< P2.getSecond() << std::endl;
-    // swap(P1,P2);
-    // // if(P1 > P2){
-    // //     std::cout << "大于" << std::endl;
-    // //     return 0;
-    // // }
-    // std::cout << "P1:name is: "<< P1.getFist() << std::endl;
-    // std::cout << "P1value is: "<< P1.getSecond() << std::endl;
-    // std::cout << "P2name is: "<< P2.getFist() << std::endl;
-    // std::cout << "P2value is: "<< P2.getSecond() << std::endl;
+    Stack<char> s1;
+    for(int i = 0; i < 5; i++){
+        SHOW("please in char");
+        PUTIN(s1);
+    }
+    SHOW(s1);
+    Stack<char> s2 = s1;
+    if(s1 == s2){
+        SHOW("there are same");
+    }else{
+    SHOW("there diffirent");
+    }
     return 0;
 }

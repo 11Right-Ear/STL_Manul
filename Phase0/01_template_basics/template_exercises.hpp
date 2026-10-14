@@ -50,9 +50,11 @@
 #define TEMPLATE_EXERCISES_HPP
 
 #include <iostream>
+#include <vector>
 
-#define SHOW(x) std::cout << x << std::endl
-#define PUTIN(x) std::cin >> x >> std::endl
+#define ENTER '\n'
+#define SHOW(x) std::cout << x << ENTER
+#define PUTIN(x) std::cin >> x  
 #define SPACE "    "
 template<typename T>
 constexpr T pi = T{3.1415926535897932385};
@@ -251,8 +253,74 @@ class Pair{
 //   - 实现 size() 返回元素个数
 // 
 // 你的代码:
+template <typename T>
+class Stack{
+    public:
+    Stack()=default;
+    Stack(std::vector<T>& x) : x_(x){
+        x_ = x;
+    };
+    Stack(std::vector<T>&& x) : x_(x){
+        x_ = std::move(x);
+    };
 
+    ~Stack(){};
+    
+    friend std::ostream& operator<<(std::ostream& os, const Stack<T> x){
+        for(int i = x.Get().size(); i > 0; i--){
+            // SHOW(i);
+            os << x.Get()[i - 1]<< std::endl;
+        }
+        return os;
+    }
+    void Set(std::vector<T> x){
+        x_ = x;
+    }
+    //Q1 为什么我不加const　他就会报错？？？
+    std::vector<T> Get() const {
+        return x_;
+    }
 
+//   - 实现 push(const T&) 入栈
+    void push(const T& x){
+       //1.借助vector方法
+       x_.push_back(x); 
+       //2.自己实现底层
+       
+    }
+//   - 实现 pop() 出栈（返回栈顶元素）
+    T pop(){
+       //1.借助vector方法
+       T value = x_.back();
+       x_.pop_back();
+       return value;
+       //2.自己实现底层
+    }
+
+//   - 实现 top() 查看栈顶元素
+    T top(){
+       //1.借助vector方法
+       return x_.back();
+       //2.自己实现底层
+    }
+
+//   - 实现 empty() 判断是否为空
+    bool empty(){
+       //1.借助vector方法
+       return x_.empty();
+       //2.自己实现底层
+    } 
+//   - 实现 size() 返回元素个数
+    int size(){
+       //1.借助vector方法
+
+       return x_.size();
+       //2.自己实现底层
+    }
+    private:
+    std::vector<T> x_;
+
+};
 
 
 
@@ -273,7 +341,91 @@ class Pair{
 //   - 保持与其他类型的接口一致
 // 
 // 你的代码:
+template <>
+class Stack<char> {
+    public:
+    Stack() = default;
+    Stack(std::vector<char> x) : x_(x){
 
+    }
+    Stack(std::vector<char>& x) : x_(x){
+
+    }
+    Stack(std::vector<char>&& x) : x_(x){
+        x_ = std::move(x);
+    }
+
+    ~Stack() = default;
+
+    //set get
+    void Set(const std::vector<char>& x){
+        x_ = x;
+    }
+    std::vector<char> Get(){
+        return x_;
+    }
+    // 重载流式输出
+    friend std::ostream& operator<<(std::ostream& os, Stack<char>& x){
+       for(int i = x.Get().size(); i > 0; i--){
+        os << x.Get()[i - 1] << ENTER;
+       } 
+       return os;
+    }
+    friend std::istream& operator>>(std::istream& os, Stack<char>& x){
+        char c;
+        os >> c;
+        x.push(c);
+        return os;
+    }
+//   - 实现 push(const T&) 入栈
+    void push(const char& x){
+       //1.借助vector方法
+       x_.push_back(x); 
+       //2.自己实现底层
+       
+    }
+//   - 实现 pop() 出栈（返回栈顶元素）
+    char pop(){
+       //1.借助vector方法
+       char value = x_.back();
+       x_.pop_back();
+       return value;
+       //2.自己实现底层
+    }
+
+//   - 实现 top() 查看栈顶元素
+    char top(){
+       //1.借助vector方法
+       return x_.back();
+       //2.自己实现底层
+    }
+
+//   - 实现 empty() 判断是否为空
+    bool empty(){
+       //1.借助vector方法
+       return x_.empty();
+       //2.自己实现底层
+    } 
+//   - 实现 size() 返回元素个数
+    int size(){
+       //1.借助vector方法
+
+       return x_.size();
+       //2.自己实现底层
+    }
+    //字符验证
+    friend bool operator==(Stack<char>& s1, Stack<char>& s2){
+        if(s1.Get().size() == s2.Get().size()){
+            for(int i = s1.Get().size(); i < 0; i--){
+                if(s1.Get()[i] != s2.Get()[i]) return false;
+            }
+        }
+        return true;
+
+    } 
+    private:
+    std::vector<char> x_;
+};
 
 
 
