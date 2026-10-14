@@ -4,8 +4,11 @@
 
 
 int main(){
-    Myptr<int> m1 = new int(42);
-    SHOW(m1.GetType());
-    SHOW(*m1);
+    // Myptr<int> m1 = new int(42);
+    // SHOW(m1.GetType());
+    // SHOW(*m1);
+    print(1,2,3);
+    print("AX", 3.15);
+    print();
     return 0;
 }

@@ -474,7 +474,13 @@ class Myptr{
 //   - 每个参数后打印换行或空格分隔
 // 
 // 你的代码:
-
+void print() {}
+template <typename T, typename ... Args> 
+void print(T x, Args ... args){
+    SHOW(x) << ENTER;
+    print(args ...);
+    
+}
 
 
 
