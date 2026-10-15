@@ -1,18 +1,21 @@
-#include "Phase0/01_template_basics/template_exercises.hpp"
-#include <iostream>
-#include <string>
+// #include "Phase0/01_template_basics/template_exercises.hpp"
+#include "Phase0/02_type_deduction/type_deduction_exercises.hpp"
+#include <array>
 
+void x(){
+    SHOW("this is a funcation");
+}
 
 int main(){
-    // auto p1 = make_unique_ptr<int>(32);
-    // SHOW(*p1) << ENTER;
-    // auto p2 = make_unique_ptr<std::string>("intellengence");
-    // SHOW(*p2);
-    Pair<double, double> p1(1.31, 3.13);
-    SHOW(p1);
-    Pair<int, int> p2(p1);
-    SHOW(p2);
-
-
+    // int x = 1;
+    // wrapper(x);
+    // wrapper(42);
+    // wrapperevery(1,"what",x);
+    // int y = 50;
+    // process1(y);
+    // double z = 1.31;
+    // process1(z);
+static_assert(std::is_same<TypeSelector<true, int, double>::type, int>::value, "");
+static_assert(std::is_same<TypeSelector<false, int, double>::type, double>::value, "");
     return 0;
 }
