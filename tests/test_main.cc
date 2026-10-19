@@ -5,22 +5,20 @@
 
 
 int main(){
-    // SHOW(arr) << ENTER
-    // SHOW("I'm traditionnal array") << ENTER
-    // SHOW(arr1.size()) << ENTER
-    // SHOW("I'm model array");
-    // double x = 10.1;
-    // double y = squr(x);
-    // SHOW(y);
-    int z = 4;
-    int z1 = 0;
-    // z1 = stepmuti(z);
-    // z1 = Nstepmumi(z);
-    // SHOW(z1);
-    int z2 = 0;
-    PUTIN(z2);
-    bool flag = false;
-    flag = is_prime_number(z2);
-    SHOW(flag) << ENTER
+
+    int x = 5;
+    type_selector(x);
+    // int x = 0;
+    // SHOW("Putin your number") << ENTER;
+    // PUTIN(x);
+    // int z = Fabolaqi(x);
+    // SHOW(z) << ENTER;
+    // int y = lambda(z, x);
+    // SHOW(y) << ENTER;
+    // if(is_evennumber(y)){
+    //     SHOW("real");
+    // }else{
+    //     SHOW("false");
+    // }
     return 0;
 }

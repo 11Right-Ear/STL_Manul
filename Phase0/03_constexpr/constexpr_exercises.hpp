@@ -36,6 +36,7 @@
 #include <iostream>
 #include <array>
 #include <string>
+#include <type_traits>
 
 #define ENTER '\n';
 #define SHOW(x) std::cout << x 
@@ -162,7 +163,7 @@ constexpr bool is_prime_number(const int& x){
             SHOW("次能被整除") << ENTER
             z++;
             SHOW("z是: ") << z << ENTER
-            if(i == 0 && z == 2){ return true;}
+            if(i == 1 && z == 2){ return true;}
         }
     }
     return false;
@@ -177,7 +178,22 @@ constexpr bool is_prime_number(const int& x){
 //   - 递归版本更简洁
 // 
 // 你的代码:
+// constexpr int Fabolaqi(const int& x){
+constexpr int Fabolaqi(const int& x){
+    // SHOW("数数我") << ENTER;
+    // if(x == 0){SHOW("this is 0") << ENTER; return 0; }
+    // if(x == 1){SHOW("this is 1") << ENTER; return 1; }
+    if(x == 0){return 0; }
+    if(x == 1){return 1; }
+    int result = 0;
+    //1. 3这个值就等于 Fabolaqi(3 - 1 = 2) + Fabolaqi(3 - 2 = 1)
+    //2. 2这个值就等于 Fabolaqi(2 - 1 = 1) + Fabolaqi(2 - 2 = 0);
+    //3. 因为1 = 1， 0 = 0所以至此可以得到结果
+    //4. 它是递归到了2 从2 开始返回值
+    result = Fabolaqi(x - 1) + Fabolaqi(x - 2);
 
+    return result;
+}
 
 
 // ============================================================================
@@ -195,6 +211,7 @@ constexpr bool is_prime_number(const int& x){
 //   - 使用 auto 声明参数类型
 // 
 // 你的代码:
+auto lambda = [](auto& x, auto& y) constexpr {return x + y;};
 
 
 
@@ -205,6 +222,7 @@ constexpr bool is_prime_number(const int& x){
 //   - 偶数判断: n % 2 == 0
 // 
 // 你的代码:
+auto is_evennumber = [](int& x) constexpr { return (x % 2 == 0);};
 
 
 
@@ -215,6 +233,22 @@ constexpr bool is_prime_number(const int& x){
 //   - constexpr lambda 可以在编译期通过 std::invoke 调用
 // 
 // 你的代码:
+template <typename T>
+auto type_selector(const T& x){
+    //根据T 不同做处理 第一个是 int ,double ,string;
+    if constexpr (std::is_same<T, int>::value){
+        SHOW("i am int value") << ENTER;
+    }
+    if constexpr (std::is_same<T, double>::value){
+        SHOW("i am double value") << ENTER;
+    }
+    if constexpr (std::is_same<T, std::string>::value){
+        SHOW("i am string value") << ENTER;
+    }
+    return "unknow type";
+
+
+}
 
 
 
@@ -237,7 +271,7 @@ constexpr bool is_prime_number(const int& x){
 //   - T 可以是不同类型
 // 
 // 你的代码:
-
+// int double string  通过constexpr 去选择不同的类型在编译器就直接执行
 
 
 // 练习 4.2: 使用 constexpr if 实现编译期类型检测
