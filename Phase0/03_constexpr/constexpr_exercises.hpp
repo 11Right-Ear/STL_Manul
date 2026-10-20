@@ -401,7 +401,18 @@ constexpr auto prime_table = []{
 //   - 例如：数组大小必须是正数，某个配置值必须在有效范围内
 // 
 // 你的代码:
+// 在编译期验证数组大小
+template <typename T, std::size_t N>
+class Buffer1{
+    public:
+    static_assert(N > 0, "Buffer must > 0");
+    static_assert(N < 24, "Buffer must <= 1024");
+    T data[N];
+    // Buffer1<int, 0> b1;
+    // Buffer1<int, 2048> b2;
+    // Buffer1<int, 10> b3;
 
+};
 
 
 // 练习 6.3: 实现一个编译期字符串哈希函数
@@ -412,8 +423,22 @@ constexpr auto prime_table = []{
 //   - 可以用于编译期字符串字面量的比较
 // 
 // 你的代码:
+// 编译期 DJB2 哈希
+constexpr size_t compile_time_hash(const char* str, size_t hash = 0) {
+    while (*str) {
+        hash = hash * 33 + *str++;
+    }
+    return hash;
+}
 
-
+// C++17: 字符串字面量哈希运算符
+constexpr size_t operator""_hash(const char* str, size_t /*len*/) {
+    size_t h = 0;
+    for (size_t i = 0; str[i]; ++i) {  // 遍历到 '\0' 之前
+        h = h * 33 + static_cast<unsigned char>(str[i]);
+    }
+    return h;
+}
 
 // ============================================================================
 // 第七部分: C++20 constexpr 扩展 (C++20 Extensions)
