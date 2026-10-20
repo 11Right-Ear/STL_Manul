@@ -6,11 +6,16 @@
 
 int main(){
 
-    // int arr[5] = {9,5,2,6,7};
-    int arr[4] = {5,1,4,2};
-    sort_1(arr);
-    for(int i = 0; i < 4; i++){
-        SHOWE(arr[i]);
+    // // int arr[5] = {9,5,2,6,7};
+    // int arr[4] = {5,1,4,2};
+    // sort_1(arr);
+    // for(int i = 0; i < 4; i++){
+    //     SHOWE(arr[i]);
+    // }
+
+    // assert(is_evennumber(3) == 9);
+    for(int p : prime_table){
+        if(p > 0) SHOW(p);SHOW(" ");
     }
     return 0;
 }

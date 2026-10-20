@@ -387,7 +387,7 @@ constexpr auto prime_table = []{
     std::array<int, 25> arr{};
     int idx = 0;
     for(int i = 2; i <= 100 && idx < 25; ++i){
-        if(is_evennumber( i)) arr[idx++] = 1;
+        if(is_evennumber( i)) arr[idx++] = i;
     }
     return arr;
 }();
