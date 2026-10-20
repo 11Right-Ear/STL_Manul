@@ -37,9 +37,11 @@
 #include <array>
 #include <string>
 #include <type_traits>
+#include <vector>
 
 #define ENTER '\n';
 #define SHOW(x) std::cout << x 
+#define SHOWE(x) std::cout << x << '\n'
 #define PUTIN(x) std::cin >> x 
 #define SPACE "    "
 
@@ -233,22 +235,7 @@ auto is_evennumber = [](int& x) constexpr { return (x % 2 == 0);};
 //   - constexpr lambda 可以在编译期通过 std::invoke 调用
 // 
 // 你的代码:
-template <typename T>
-auto type_selector(const T& x){
-    //根据T 不同做处理 第一个是 int ,double ,string;
-    if constexpr (std::is_same<T, int>::value){
-        SHOW("i am int value") << ENTER;
-    }
-    if constexpr (std::is_same<T, double>::value){
-        SHOW("i am double value") << ENTER;
-    }
-    if constexpr (std::is_same<T, std::string>::value){
-        SHOW("i am string value") << ENTER;
-    }
-    return "unknow type";
 
-
-}
 
 
 
@@ -269,9 +256,24 @@ auto type_selector(const T& x){
 // 提示:
 //   - 根据条件在编译期选择不同的返回类型
 //   - T 可以是不同类型
-// 
 // 你的代码:
 // int double string  通过constexpr 去选择不同的类型在编译器就直接执行
+template <typename T>
+auto type_selector(const T& x){
+    //根据T 不同做处理 第一个是 int ,double ,string;
+    if constexpr (std::is_same<T, int>::value){
+        SHOW("i am int value") << ENTER;
+    }
+    if constexpr (std::is_same<T, double>::value){
+        SHOW("i am double value") << ENTER;
+    }
+    if constexpr (std::is_same<T, std::string>::value){
+        SHOW("i am string value") << ENTER;
+    }
+    return "unknow type";
+
+} 
+
 
 
 // 练习 4.2: 使用 constexpr if 实现编译期类型检测
@@ -282,8 +284,16 @@ auto type_selector(const T& x){
 //   - 在编译期分支中选择不同的处理方式
 // 
 // 你的代码:
-
-
+template <typename T>
+void is_integral1(T value){
+    if constexpr 
+    (std::is_integral<T>::value){
+        SHOWE("porecess intergral");
+    }else{
+        SHOWE("process non-intergral");
+    }
+    //居然需要末尾换行 --> 宏没有换行或刷新
+}
 
 // 练习 4.3: 使用 constexpr if 实现递归终止
 // 
@@ -292,6 +302,18 @@ auto type_selector(const T& x){
 //   - 更清晰的代码结构
 // 
 // 你的代码:
+template <typename T, std::size_t N, std::size_t... Is>
+T recursion_s_impl(const T (&arr)[N], std::index_sequence<Is...>) {
+    if constexpr (N == 0) return T{};
+    T result = T{};
+    ((result += arr[Is]), ...);
+    return result;
+}
+
+template <typename T, std::size_t N>
+T recursion_s(const T (&arr)[N]) {
+    return recursion_s_impl(arr, std::make_index_sequence<N>{});
+}
 
 
 
@@ -310,7 +332,9 @@ auto type_selector(const T& x){
 //   - 可以用聚合初始化或 std::array 的 make_array 创建
 // 
 // 你的代码:
-
+void creatarr(){
+    constexpr std::array<int, 2> arr = {1, 2};
+}
 
 
 // 练习 5.2: 实现一个 constexpr 函数，对数组进行排序
@@ -321,8 +345,28 @@ auto type_selector(const T& x){
 //   - 注意数组大小必须是编译期常量
 // 
 // 你的代码:
+// 冒泡排序： 从左往右一次找最大
+template <typename T, std::size_t N>
+constexpr std::size_t array_size(T (&)[N]){return N;}
 
+template <typename T, std::size_t N>
+void sort_1(T (&x)[N]) {
+    int z = array_size(x) - 1;
+    for(int i = 0; i < z; i++){
+        SHOW("第： "); SHOWE(i);
+        for(int j = i + 1; j <= z; ++j){
+            // i 不动了 j 动
+            SHOW("x[i]"); SHOWE(x[i]);
+            SHOW("x[j]"); SHOWE(x[j]);
+            if(x[i] > x[j]){
+                SHOW("将： "); SHOW(x[i]); SHOW("与： "); SHOW(x[j]); SHOWE("交换");
+                
+                std::swap(x[i],x[j]);
+            }
+        }
+    }
 
+}
 
 // ============================================================================
 // 第六部分: 编译期计算 (Compile-time Computation)
@@ -339,7 +383,14 @@ auto type_selector(const T& x){
 //   - 编译期计算可以用于静态断言验证
 // 
 // 你的代码:
-
+constexpr auto prime_table = []{
+    std::array<int, 25> arr{};
+    int idx = 0;
+    for(int i = 2; i <= 100 && idx < 25; ++i){
+        if(is_evennumber( i)) arr[idx++] = 1;
+    }
+    return arr;
+}();
 
 
 // 练习 6.2: 使用编译期计算验证数据约束
@@ -354,7 +405,7 @@ auto type_selector(const T& x){
 
 
 // 练习 6.3: 实现一个编译期字符串哈希函数
-// 
+// j
 // 提示:
 //   - 简单的哈希算法：如 ELF hash 或 DJB2
 //   - 使用 constexpr 函数计算字符串的哈希值

@@ -6,19 +6,11 @@
 
 int main(){
 
-    int x = 5;
-    type_selector(x);
-    // int x = 0;
-    // SHOW("Putin your number") << ENTER;
-    // PUTIN(x);
-    // int z = Fabolaqi(x);
-    // SHOW(z) << ENTER;
-    // int y = lambda(z, x);
-    // SHOW(y) << ENTER;
-    // if(is_evennumber(y)){
-    //     SHOW("real");
-    // }else{
-    //     SHOW("false");
-    // }
+    // int arr[5] = {9,5,2,6,7};
+    int arr[4] = {5,1,4,2};
+    sort_1(arr);
+    for(int i = 0; i < 4; i++){
+        SHOWE(arr[i]);
+    }
     return 0;
 }
