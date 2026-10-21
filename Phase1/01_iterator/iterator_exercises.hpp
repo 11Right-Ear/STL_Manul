@@ -71,6 +71,40 @@
 //   - 使用 * 解引用获取元素值
 // 
 // 你的代码:
+struct Point{
+    int x = 0;
+    int y = 0;
+};
+//构造一个vector 填充，一共有四种遍历方式
+void traverse_4(std::vector<Point>& px){
+    //1.正常for循环
+    for(int i = 0; i < px.size(); ++i){
+        SHOWE("正常for循环");
+        SHOWE(px[i].x);
+        SHOWE(px[i].y);
+    }
+    for(std::vector<Point>::iterator it = px.begin(); it != px.end(); ++it){
+    //2.使用迭代器遍历
+        SHOWE("使用迭代器遍历");
+        SHOWE((*it).x);
+        SHOWE((*it).y);
+    }
+    for(auto it = px.begin(); it != px.end(); ++it){
+    //3.使用auto关键字
+        SHOWE("使用auto关键字");
+        SHOWE((*it).x);
+        SHOWE((*it).y);
+    }
+    for(auto it : px){
+    //4.auto简单写形式
+        SHOWE("auto简单写形式");
+        SHOWE(it.x);
+        SHOWE(it.y);
+    }
+
+}
+
+
 
 
 
@@ -81,7 +115,7 @@
 //   - 可以通过迭代器修改容器的元素
 // 
 // 你的代码:
-
+// void 
 
 
 // 练习 1.3: 使用 const_iterator 遍历常量容器

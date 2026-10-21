@@ -1,21 +1,20 @@
 // #include "Phase0/01_template_basics/template_exercises.hpp"
 // #include "Phase0/02_type_deduction/type_deduction_exercises.hpp"
-#include "Phase0/03_constexpr/constexpr_exercises.hpp"
-#include <array>
-
+#include "Phase1/01_iterator/iterator_exercises.hpp"
 
 int main(){
 
-    // // int arr[5] = {9,5,2,6,7};
-    // int arr[4] = {5,1,4,2};
-    // sort_1(arr);
-    // for(int i = 0; i < 4; i++){
-    //     SHOWE(arr[i]);
-    // }
+	std::vector<Point> px;
+	px.clear();
+	int m = 0;
+	px.resize(m);
 
-    // assert(is_evennumber(3) == 9);
-    for(int p : prime_table){
-        if(p > 0) SHOW(p);SHOW(" ");
-    }
-    return 0;
+	for(int i = 1; i < 5; ++i){
+		Point py;
+		py.x = i;
+		py.y = i*i;
+		px.push_back(py);
+	}
+	traverse_4(px);
+    return -1;
 }
