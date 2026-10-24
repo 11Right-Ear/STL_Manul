@@ -1,0 +1,25 @@
+# ---- 编译产物 ----
+build/
+bin/
+*.out
+*.exe
+*.o
+*.obj
+
+# ---- 日志与临时输出 ----
+*.log
+
+# ---- 编辑器 / 工具配置 ----
+.vscode/
+.mcp.json
+.roomodes
+
+# ---- 本地实验目录（不纳入版本管理） ----
+Goal/
+cherno/
+gdb_debug_tutorial/
+script/
+
+# ---- 根目录下的临时文件 ----
+/query
+/start
