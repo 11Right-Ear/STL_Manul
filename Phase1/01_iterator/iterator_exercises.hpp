@@ -40,6 +40,7 @@
 #ifndef ITERATOR_EXERCISES_HPP
 #define ITERATOR_EXERCISES_HPP
 
+#include <cstdint>
 #include <iostream>
 #include <sstream>
 #include <iterator>
@@ -126,42 +127,56 @@ void traverse_4(std::vector<Point>& px){
 void exercise_1_2_modify_by_iterator(){
     SHOWE("[练习 1.2] 使用迭代器修改元素");
 
-    std::vector<int> v{1, 2, 3, 4, 5};
-
-    SHOWE("修改前:");
-    for(auto it = v.begin(); it != v.end(); ++it){
-        SHOWE(*it);
-    }
-
-    // *it 返回元素的引用，可以直接赋值修改容器中的元素
-    for(auto it = v.begin(); it != v.end(); ++it){
-        *it *= 10;
-    }
-
-    SHOWE("修改后(每个元素乘以10):");
-    for(auto it = v.begin(); it != v.end(); ++it){
-        SHOWE(*it);
-    }
+    // std::vector<std::uint16_t> vint{0};
+    // vint.resize(5);
+    // for(std::vector<std::uint16_t>::iterator x1_2 = vint.begin(); x1_2 != vint.end(); ++x1_2){
+    //     static int ab = 1;
+    //     *x1_2 = ab * 3;
+    //     ab++;
+    //     SHOW("init vint[ ] is: "); SHOWE(*x1_2);
+    // }
+    // // *it 返回元素的引用，可以直接赋值修改容器中的元素
+    // std::vector<uint16_t> y1_2{9, 6, 3, 2, 0};
+    // for(std::vector<uint16_t>::iterator x1_2 = vint.begin(); x1_2 != vint.end(); ++x1_2){
+    //     static int ab = 0;
+    //     *x1_2 = y1_2[ab];
+    //     ab++;
+    // }
+    // for(auto x1_2 = vint.begin(); x1_2 != vint.end(); ++x1_2){
+    //     SHOW(*x1_2); SHOW(SPACE);
+    // }
 
     // 也可以用迭代器配合箭头运算符访问成员(结构体场景)
-    std::vector<Point> pts{{1, 2}, {3, 4}};
-    for(auto it = pts.begin(); it != pts.end(); ++it){
-        it->x += 100;
-        it->y += 100;
+    std::vector<Point> pointx_y = {};
+    pointx_y.resize(5);
+    for(std::vector<Point>::iterator x1_2 = pointx_y.begin(); x1_2 != pointx_y.end(); ++x1_2){
+        static bool flag = false;
+        if(!flag){
+            x1_2->x = 1;
+            x1_2->y = 1;        
+            continue;
+         }
+         flag = true;
+        std::vector<Point>::iterator temp = x1_2;
+        x1_2->x = (temp--)->x * 2;
+        x1_2->y = (temp--)->y * 2;
     }
-    SHOWE("Point 结构体通过 it-> 成员访问修改后:");
-    for(const auto& p : pts){
-        SHOWE(p.x);
-        SHOWE(p.y);
+    for(auto x1_2 = pointx_y.begin(); x1_2 != pointx_y.end(); ++x1_2){
+        SHOW("point x is: "); SHOWE(x1_2->x);
+        SHOW("point y is: "); SHOWE(x1_2->y);
     }
 
-    // 配合算法使用迭代器区间
-    std::vector<int> dst(5);
-    std::copy(v.begin(), v.end(), dst.begin());
-    SHOWE("std::copy 复制后的 dst:");
-    for(auto it = dst.begin(); it != dst.end(); ++it){
-        SHOWE(*it);
-    }
+
+    // SHOWE("Point 结构体通过 it-> 成员访问修改后:");
+
+
+    // // 配合算法使用迭代器区间
+    // std::vector<int> dst(5);
+    // std::copy(v.begin(), v.end(), dst.begin());
+    // SHOWE("std::copy 复制后的 dst:");
+    // for(auto it = dst.begin(); it != dst.end(); ++it){
+    //     SHOWE(*it);
+    // }
 }
 
 // 练习 1.3: 使用 const_iterator 遍历常量容器

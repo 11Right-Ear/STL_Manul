@@ -15,7 +15,7 @@ include_directories(${PROJECT_SOURCE_DIR}/Phase1/01_iterator)
 include_directories(${PROJECT_SOURCE_DIR}/Phase1/02_allocator)
 include_directories(${PROJECT_SOURCE_DIR}/Phase1/03_traits)
 
-#设置输出的路径
+#设置输出的路径 这里用PATH为什么就不行，而是要用DIR
 # set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_PATH}/bin)
 set (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
