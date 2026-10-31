@@ -4,30 +4,18 @@
 
 int main(){
 
-	// std::vector<Point> px;
-	// px.clear();
-	// int m = 0;
-	// px.resize(m);
-
-	// for(int i = 1; i < 5; ++i){
-	// 	Point py;
-	// 	py.x = i;
-	// 	py.y = i*i;
-	// 	px.push_back(py);
-	// }
-	// traverse_4(px);
-
 	// ===== Phase1/01_iterator 迭代器练习 =====
-	exercise_1_2_modify_by_iterator();      // 练习 1.2: 使用迭代器修改元素
+	// exercise_1_2_modify_by_iterator();      // 练习 1.2: 使用迭代器修改元素
 
 	// exercise_1_3_const_iterator();         // 练习 1.3: 使用 const_iterator 遍历常量容器
 
 	// exercise_2_1_forward_iterator();        // 练习 2.1: ForwardIterator
+
 	// exercise_2_2_bidirectional_iterator();  // 练习 2.2: BidirectionalIterator
 	// exercise_2_3_random_access_iterator();  // 练习 2.3: RandomAccessIterator
 
 	// exercise_3_1_reverse_iterator();        // 练习 3.1: std::reverse_iterator
-	// exercise_3_2_custom_reverse_iterator(); // 练习 3.2: 自定义 ReverseIterator
+	exercise_3_2_custom_reverse_iterator(); // 练习 3.2: 自定义 ReverseIterator
 	// exercise_3_3_insert_iterator();         // 练习 3.3: 插入迭代器
 	// exercise_3_4_stream_iterator();         // 练习 3.4: 流迭代器(需要从 stdin 输入)
 

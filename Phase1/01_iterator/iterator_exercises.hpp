@@ -40,6 +40,7 @@
 #ifndef ITERATOR_EXERCISES_HPP
 #define ITERATOR_EXERCISES_HPP
 
+#include <cstddef>
 #include <cstdint>
 #include <iostream>
 #include <sstream>
@@ -127,24 +128,24 @@ void traverse_4(std::vector<Point>& px){
 void exercise_1_2_modify_by_iterator(){
     SHOWE("[练习 1.2] 使用迭代器修改元素");
 
-    // std::vector<std::uint16_t> vint{0};
-    // vint.resize(5);
-    // for(std::vector<std::uint16_t>::iterator x1_2 = vint.begin(); x1_2 != vint.end(); ++x1_2){
-    //     static int ab = 1;
-    //     *x1_2 = ab * 3;
-    //     ab++;
-    //     SHOW("init vint[ ] is: "); SHOWE(*x1_2);
-    // }
-    // // *it 返回元素的引用，可以直接赋值修改容器中的元素
-    // std::vector<uint16_t> y1_2{9, 6, 3, 2, 0};
-    // for(std::vector<uint16_t>::iterator x1_2 = vint.begin(); x1_2 != vint.end(); ++x1_2){
-    //     static int ab = 0;
-    //     *x1_2 = y1_2[ab];
-    //     ab++;
-    // }
-    // for(auto x1_2 = vint.begin(); x1_2 != vint.end(); ++x1_2){
-    //     SHOW(*x1_2); SHOW(SPACE);
-    // }
+    std::vector<std::uint16_t> vint{0};
+    vint.resize(5);
+    for(std::vector<std::uint16_t>::iterator x1_2 = vint.begin(); x1_2 != vint.end(); ++x1_2){
+        static int ab = 1;
+        *x1_2 = ab * 3;
+        ab++;
+        SHOW("init vint[ ] is: "); SHOWE(*x1_2);
+    }
+    // *it 返回元素的引用，可以直接赋值修改容器中的元素
+    std::vector<uint16_t> y1_2{9, 6, 3, 2, 0};
+    for(std::vector<uint16_t>::iterator x1_2 = vint.begin(); x1_2 != vint.end(); ++x1_2){
+        static int ab = 0;
+        *x1_2 = y1_2[ab];
+        ab++;
+    }
+    for(auto x1_2 = vint.begin(); x1_2 != vint.end(); ++x1_2){
+        SHOW(*x1_2); SHOW(SPACE);
+    }
 
     // 也可以用迭代器配合箭头运算符访问成员(结构体场景)
     std::vector<Point> pointx_y = {};
@@ -154,29 +155,29 @@ void exercise_1_2_modify_by_iterator(){
         if(!flag){
             x1_2->x = 1;
             x1_2->y = 1;        
+            flag = true;
             continue;
          }
-         flag = true;
-        std::vector<Point>::iterator temp = x1_2;
-        x1_2->x = (temp--)->x * 2;
-        x1_2->y = (temp--)->y * 2;
+        std::vector<Point>::iterator temp = x1_2 - 1;
+        x1_2->x = temp->x * 2;
+        x1_2->y = temp->y * 2;
     }
+    // SHOWE("Point 结构体通过 it-> 成员访问修改后:");
     for(auto x1_2 = pointx_y.begin(); x1_2 != pointx_y.end(); ++x1_2){
         SHOW("point x is: "); SHOWE(x1_2->x);
         SHOW("point y is: "); SHOWE(x1_2->y);
     }
 
 
-    // SHOWE("Point 结构体通过 it-> 成员访问修改后:");
 
-
-    // // 配合算法使用迭代器区间
-    // std::vector<int> dst(5);
-    // std::copy(v.begin(), v.end(), dst.begin());
-    // SHOWE("std::copy 复制后的 dst:");
-    // for(auto it = dst.begin(); it != dst.end(); ++it){
-    //     SHOWE(*it);
-    // }
+    // 配合算法使用迭代器区间
+    std::vector<int> v{1,5,3,7,6};
+    std::vector<int> dst(5);
+    std::copy(v.begin(), v.end(), dst.begin());
+    SHOWE("std::copy 复制后的 dst:");
+    for(auto it = dst.begin(); it != dst.end(); ++it){
+        SHOWE(*it);
+    }
 }
 
 // 练习 1.3: 使用 const_iterator 遍历常量容器
@@ -190,33 +191,47 @@ void exercise_1_2_modify_by_iterator(){
 void exercise_1_3_const_iterator(){
     SHOWE("[练习 1.3] 使用 const_iterator 遍历常量容器");
 
-    const std::vector<int> cv{10, 20, 30, 40, 50};
+    std::vector<int> vint{};
+    // const std::vector<int> cv{10, 20, 30, 40, 50};
+    vint.resize(5);
+    uint16_t count = 1;
+    for(std::vector<int>::iterator x1_3 = vint.begin(); x1_3 != vint.end(); ++x1_3,++count){
+        SHOWE("keybord a number: ");
+        SHOW("第 "); SHOW(count); SHOWE(" 次");
+        PUTIN(*x1_3);
 
-    // cbegin()/cend() 返回 const_iterator
-    std::vector<int>::const_iterator it = cv.cbegin();
-    SHOWE("使用 const_iterator 遍历常量 vector:");
-    for(; it != cv.cend(); ++it){
-        SHOWE(*it);
     }
 
-    // 遍历 const 容器时，begin() 本身就返回 const_iterator
-    auto it2 = cv.begin();
-    using ConstIt = std::vector<int>::const_iterator;
-    bool same_kind = std::is_same<decltype(it2), ConstIt>::value;
-    const char* yes_no = same_kind ? "是" : "否";
-    SHOWE("const 容器的 begin() 返回类型也是 const_iterator:");
-    SHOWE(yes_no);
-    for(it2 = cv.begin(); it2 != cv.end(); ++it2){
-        SHOWE(*it2);
-    }
+//     // cbegin()/cend() 返回 const_iterator
+//     {
+//         std::vector<int>::const_iterator x1_3 = vint.cbegin();
+//     for(; x1_3 != vint.cend(); ++x1_3){
+//         SHOW(*x1_3);
+//     }
+// }
+//     // 遍历 const 容器时，begin() 本身就返回 const_iterator
+//     const std::vector<int> vint2{1,2,3,4,5};
+//     std::vector<int>::const_iterator x1_3 = vint2.begin();
+//     using ConstIt = std::vector<int>::const_iterator;
+//     // bool same_kind = std::is_same<decltype(x1_3), ConstIt>::value;
+//     bool same_type = std::is_same<decltype(x1_3), std::vector<int>::const_iterator>::value;
+//     const char* is_ture = same_type ? "yes" : "no";
+//     // const char* yes_no = same_kind ? "是" : "否";
+//     SHOWE("const 容器的 begin() 返回类型也是 const_iterator:");
+//     SHOWE(is_ture);
+//     for(x1_3 = vint2.begin(); x1_3 != vint2.end(); ++x1_3){
+//         SHOWE(*x1_3);
+//     }
 
     // 反向的 const 迭代器
     SHOWE("使用 crbegin()/crend() 反向遍历:");
-    for(auto rit = cv.crbegin(); rit != cv.crend(); ++rit){
-        SHOWE(*rit);
-    }
+    // const std::vector<int> vint2{1,2,3,4,5};
+    // using Constx1_2 = std::vector<int>::const_reverse_iterator;
+    // for(Constx1_2 x1_3_2 = vint2.crbegin(); x1_3_2 != vint2.crend(); ++x1_3_2){
+    //     SHOWE(*x1_3_2);
+    // }
 
-    // 演示: 非 const 容器的 begin() 与 cbegin() 类型不同
+    // // 演示: 非 const 容器的 begin() 与 cbegin() 类型不同
     std::vector<int> mv{1, 2, 3};
     using It = decltype(mv.begin());
     using CIt = decltype(mv.cbegin());
@@ -225,10 +240,10 @@ void exercise_1_3_const_iterator(){
     SHOWE("非 const 容器的 begin() 与 cbegin() 是否同类型:");
     SHOWE(same_str);
 
-    // 演示: 通过 const_iterator 修改元素是编译期错误, 这里用注释说明
-    // auto bad = cv.cbegin();
-    // *bad = 100;   // error: assignment of read-only location
-    SHOWE("const_iterator 无法解引用赋值(编译期错误, 见源码注释)");
+    // // 演示: 通过 const_iterator 修改元素是编译期错误, 这里用注释说明
+    // // auto bad = cv.cbegin();
+    // // *bad = 100;   // error: assignment of read-only location
+    // SHOWE("const_iterator 无法解引用赋值(编译期错误, 见源码注释)");
 }
 
 
@@ -257,6 +272,7 @@ void exercise_1_3_const_iterator(){
 template<typename T>
 class ForwardIterator{
 public:
+    //为了使标准库迭代器认出我
     using iterator_category = std::forward_iterator_tag;
     using value_type        = typename std::remove_const<T>::type;
     using difference_type   = std::ptrdiff_t;
@@ -265,8 +281,10 @@ public:
 
     explicit ForwardIterator(T* p = nullptr) : ptr_(p) {}
 
-    reference operator*() const { return *ptr_; }
-    pointer   operator->() const { return ptr_; }
+    // reference operator*() const { return *ptr_; }
+    T& operator*() const {return *ptr_;}
+    // pointer   operator->() const { return ptr_; }
+    T* operator->() const {return ptr_;}
 
     // 前置 ++: 返回自身引用, 支持 it++ 链式
     ForwardIterator& operator++(){
@@ -376,13 +394,66 @@ private:
     T* ptr_;
 };
 
+template <typename T>
+class ImatateIterator{
+    public:
+    using iterator_category = std::bidirectional_iterator_tag;
+    using value_type        = typename std::remove_const<T>::type;
+    using difference_type   = std::ptrdiff_t;
+    using pointer           = T*;
+    using reference          = T&;
+
+    explicit ImatateIterator(T* p = nullptr) : ptr_(p){}
+
+    reference operator*() const {
+       return *ptr_; 
+    }
+    pointer operator->() const {
+        return ptr_;
+    }
+
+    ImatateIterator& operator++() {
+        ++ptr_;
+        return *this;
+    }
+    ImatateIterator operator++(int){
+        ImatateIterator<int> tmp(*this);
+        ptr_++;
+        return tmp;
+    }
+    ImatateIterator& operator--(){
+        --ptr_;
+        return *this;
+    }
+    ImatateIterator operator--(int){
+        ImatateIterator tmp(*this);
+        --ptr_;
+        return tmp;
+    }
+
+    bool operator==(const ImatateIterator& it1) const {
+        return ptr_ == it1.ptr_;
+    }
+    bool operator!=(const ImatateIterator& it1) const {
+        return ptr_ != it1.ptr_;
+    }
+
+    T* Raw() const {return ptr_;}
+
+    private:
+    T* ptr_;
+
+
+};
 // 练习 2.2 演示
 void exercise_2_2_bidirectional_iterator(){
     SHOWE("[练习 2.2] BidirectionalIterator 实现与演示");
 
     int arr[] = {1, 2, 3, 4, 5};
-    BidirectionalIterator<int> it(arr + 5);   // 指向末尾
-    BidirectionalIterator<int> itBegin(arr);
+    // BidirectionalIterator<int> it(arr + 5);   // 指向末尾
+    ImatateIterator<int> it(arr + 5);
+    // BidirectionalIterator<int> itBegin(arr);
+    ImatateIterator<int> itBegin(arr);
 
     SHOWE("反向遍历:");
     for(--it; it != itBegin; --it){
@@ -390,11 +461,11 @@ void exercise_2_2_bidirectional_iterator(){
     }
 
     SHOWE("正向遍历 (与反向对称):");
-    for(auto p = itBegin; p != BidirectionalIterator<int>(arr + 5); ++p){
+    for(auto p = itBegin; p != ImatateIterator<int>(arr + 5); ++p){
         SHOWE(*p);
     }
 
-    using Traits = std::iterator_traits<BidirectionalIterator<int>>;
+    using Traits = std::iterator_traits<ImatateIterator<int>>;
     bool is_bidi = std::is_same<Traits::iterator_category, std::bidirectional_iterator_tag>::value;
     const char* flag = is_bidi ? "是" : "否";
     SHOWE("iterator_category 为 bidirectional_iterator_tag:");
@@ -509,7 +580,7 @@ void exercise_2_3_random_access_iterator(){
     SHOWE("[练习 2.3] RandomAccessIterator 实现与演示");
 
     int arr[] = {10, 20, 30, 40, 50};
-    RandomAccessIterator<int> it(arr);
+    RandomAccessIterator<int> it(arr + 1);
     RandomAccessIterator<int> itEnd(arr + 5);
 
     SHOWE("正向遍历:");
